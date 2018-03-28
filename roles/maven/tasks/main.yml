@@ -1,0 +1,70 @@
+---
+  - name: Create destination directory
+    file:
+      path: "{{ maven_destination_directory }}"
+      owner: dev
+      group: dev
+      mode: 0755
+      state: directory
+
+  - name: Download and untar the maven binary file
+    unarchive:
+      src: http://apache.mirrors.spacedump.net/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
+      dest: "{{ maven_destination_directory }}"
+      remote_src: yes
+      owner: dev
+      group: dev
+      mode: 0755
+
+  - name: Set M2_HOME
+    template:
+      src: maven_home.sh.j2
+      dest: /etc/profile.d/maven_home.sh
+
+  - name: Create a symlink to mvn
+    file:
+      src: "{{ maven_destination_directory }}/apache-maven-{{ maven_version }}/bin/mvn"
+      dest: /usr/local/bin/mvn
+      owner: dev
+      group: dev
+      state: link
+
+#  - name: Get maven bash completion
+#    get_url:
+#      url: https://raw.githubusercontent.com/juven/maven-bash-completion/master/bash_completion.bash
+#      dest: /etc/bash_completion.d/mvn
+#    when: maven_enable_bash_completion
+
+
+  - name: Ensure M2_HOME is sourced from the .profile
+    blockinfile:
+      dest: "/home/dev/.profile"
+      block: |
+       M2_HOME="{{maven_name}}"
+       PATH="$M2_HOME/bin:$PATH"
+      marker: '# {mark}  MANAGED BLOCK - exporte M2_HOME'
+      insertbefore: EOF
+      create: yes
+
+  - name: Fix ownership
+    file: state=directory path={{maven_m2}} owner=dev group=dev recurse=yes mode=0755
+
+
+  - name: Ensure jeap configuration  is correct on .M2 folder
+    template: src=settings.xml.j2 dest={{maven_m2}}settings.xml
+    tags: ["configuration","Maven"]
+
+
+  - name: Add M2_HOME on etc/environment
+    lineinfile:
+        dest: /etc/environment
+        insertafter: EOF
+        line: 'M2_HOME="{{ maven_destination_directory }}/apache-maven-{{ maven_version }}"'
+
+
+
+  - name: M2_HOME Set permission to dev user
+    command: "{{ item }}"
+    with_items:
+        - chmod -R 755 {{ maven_destination_directory }}/apache-maven-{{ maven_version }}
+        - chown -R dev {{ maven_destination_directory }}/apache-maven-{{ maven_version }}

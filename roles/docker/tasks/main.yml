@@ -1,0 +1,10 @@
+---
+- name: Include global_vars
+  include_vars:
+    file: '../vars/all.yml'
+    name:  global_vars
+
+- import_tasks: docker-install.yml
+  when: ansible_os_family == 'Debian'
+
+

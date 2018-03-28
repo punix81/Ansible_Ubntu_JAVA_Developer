@@ -1,0 +1,47 @@
+---
+
+- name: Ensure Unity MediaScanner is removed (useless + cause high CPU peaks)
+  apt: pkg={{ item }} purge=yes state=absent
+  with_items:
+    - mediascanner2.0
+    - libmediascanner-2.0-0
+
+
+- name: Remove Amazon and others Unity shits
+  apt: pkg={{ item }} purge=yes state=absent
+  with_items:
+    - ubuntu-web-launchers
+
+
+- name: Remove shitty Amazon shortcut
+  file: path=/usr/share/applications/ubuntu-amazon-default.desktop force=yes state=absent
+
+
+- name: Remove exemples shortcut
+  file: path="{{ home_dev }}/examples.desktop" force=yes state=absent
+
+# Reassign path :
+# xdg-user-dirs-update --set NAME ABSOLUTE_PATH
+#
+# Available values for NAME
+#   DESKTOP
+#   DOWNLOAD
+#   TEMPLATES
+#   PUBLICSHARE
+#   DOCUMENTS
+#   MUSIC
+#   PICTURES
+#   VIDEOS
+- name: Remove XDG directories
+  file: path="{{ home_dev }}/{{ item }}" force=yes state=absent
+  with_items:
+    - Documents
+    - Pictures
+    - Videos
+    - Music
+    - Templates
+
+- name : Run xdg-user-dirs-update
+  shell: xdg-user-dirs-update
+  become: true
+  become_user: "dev"

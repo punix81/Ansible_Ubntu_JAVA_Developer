@@ -1,0 +1,8 @@
+---
+  - name: check if java is installed
+    stat:
+      path={{java_install_dir}}
+    register: java_present
+
+  - import_tasks: tasks/java_install.yml
+    when: not java_present.stat.exists

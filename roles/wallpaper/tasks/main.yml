@@ -1,0 +1,16 @@
+---
+
+  - name: Rename default cacert to cacert old
+    command:  convert home/dev/development/projects/jeap-ansible/roles/wallpaper/templates/Ubuntu-Wall.PNG  -pointsize 20  -draw "gravity south  fill black  text 0,12 'Copyright'  fill white  text 1,11 'Copyright' "  home/dev/development/projects/jeap-ansible/roles/wallpaper/templates/Ubuntu-Wall-out.PNG
+
+
+
+
+
+- name: Set global keybindings
+  command: "{{ item }}"
+  with_items:
+    - gsettings set org.gnome.desktop.background picture-uri "file:///home/dev/development/projects/jeap-ansible/roles/wallpaper/templates/Ubuntu-Wall-out.PNG"
+
+  become: true
+  become_user: dev

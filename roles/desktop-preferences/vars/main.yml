@@ -1,0 +1,4 @@
+user_home: /home/dev/
+development_path: /home/dev/development
+gsettings_user: dev
+gsettings_settings: []

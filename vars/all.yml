@@ -16,7 +16,7 @@ no_proxy: true
 ########################################################
 # THIS BLOCK IS VALID ONLY IF NO_PROXY IS FALSE
 ########################################################
-proxy: proxy-bvcol.admin.ch
+proxy: proxy-xxx.xxx.ch
 port: 8080
 
 
@@ -24,6 +24,6 @@ http_proxy: http://{{proxy}}:{{port}}
 https_proxy: http://{{proxy}}:{{port}}
 
 
-nexus_url: https://repo.bit.admin.ch/repository/npm-group/
-proxy_pac: http://proxypac.efd.admin.ch/proxy.pac
+nexus_url: XXXXXXXX
+proxy_pac: XXXXXXXX
 

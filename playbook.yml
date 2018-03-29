@@ -13,7 +13,7 @@
 #     - name: proxy
 #     - name: java
 #     - name: maven
-     - name: intellij
+#     - name: intellij
 #     - name: nodejs
 #     - name: curl
 #     - name: docker
@@ -26,7 +26,7 @@
 #     - name: kitematic
 #    - name: desktop-preferences
 #     - name: desktop-cleanup
-#     - name: wallpaper
+     - name: wallpaper
 
 #  tasks:
 #     - name: Reboot ubuntu

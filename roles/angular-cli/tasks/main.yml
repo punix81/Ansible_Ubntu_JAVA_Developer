@@ -1,0 +1,13 @@
+---
+
+- name: Ensure Nodejs is Install
+  include_role:
+    name: nodejs
+  when: not idontwanttorun
+
+- name: Instal Angular-cli and ncu
+  command: "{{ item }}"
+  with_items:
+    - npm install -g @angular/cli
+    - npm install -g npm-check-updates
+  become: true

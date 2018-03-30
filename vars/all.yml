@@ -1,0 +1,29 @@
+########################################################
+# PLEASE ENTER YOUR FULL NAME AND EMAIL! 
+# EXAMPLE : user_display_name: "Paulo Lopes"
+#           user_mail: "paulo.lopes@my.mail.ch"
+########################################################
+user_display_name: "Paulo Lopes"
+user_mail: "lopespaulo18@gmail.com"
+
+
+########################################################
+# IF YOU HAVE A PROXY 
+# IF YOU DON'T HAVE ANY PROXY THE DEFAULT VALUE IS TRUE
+########################################################
+no_proxy: true
+
+########################################################
+# THIS BLOCK IS VALID ONLY IF NO_PROXY IS FALSE
+########################################################
+proxy: proxy-xxx.xxx.ch
+port: 8080
+
+
+http_proxy: http://{{proxy}}:{{port}}
+https_proxy: http://{{proxy}}:{{port}}
+
+
+nexus_url: XXXXXXXX
+proxy_pac: XXXXXXXX
+

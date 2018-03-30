@@ -26,7 +26,6 @@
   - debug:
       msg: "Install certificates? {{ global_vars.no_proxy }} "
 
-
 #    when: not java_present.stat.exists
 
 

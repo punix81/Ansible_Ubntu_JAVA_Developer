@@ -18,7 +18,7 @@ home_path: /home/dev/development
 # IF YOU HAVE A PROXY 
 # IF YOU DON'T HAVE ANY PROXY THE DEFAULT VALUE IS TRUE
 #########################################################
-no_proxy: true
+disabled_proxy: true
 
 #########################################################
 ## THIS BLOCK IS VALID ONLY IF NO_PROXY IS FALSE

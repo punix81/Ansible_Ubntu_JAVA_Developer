@@ -16,7 +16,7 @@
 
   - debug:
       msg: "Java not Installed"
-    when: not java_present.stat.exists
+    when:  java_present.stat.exists
 
 
   - import_tasks: tasks/java_install.yml
@@ -24,13 +24,12 @@
 
 
   - debug:
-      msg: "Install certificates? {{ global_vars.no_proxy }} "
-
-#    when: not java_present.stat.exists
+      msg: "Proxy is activated? {{ global_vars.disabled_proxy }}"
 
 
 
-
+  - import_tasks: tasks/certificates.yml
+    when: global_vars.disabled_proxy
 
 
 

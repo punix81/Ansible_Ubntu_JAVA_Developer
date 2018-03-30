@@ -45,13 +45,6 @@
         line: 'JAVA_HOME={{global_vars.home_path}}/java/jdk1.8.0_05'
 
 
-  - name: Java Set permission to dev user
-    command: "{{ item }}"
-    with_items:
-      - chmod -R 755 {{global_vars.home_path}}/java/jdk1.8.0_05
-      - chown -R dev {{global_vars.home_path}}/java/jdk1.8.0_05
-
-
 
 
 

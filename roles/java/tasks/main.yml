@@ -7,26 +7,20 @@
   - debug:
       msg: "Home path {{ global_vars.home_path }}"
 
-
   - name: Check if java is installed
     stat:
       path={{global_vars.home_path}}/java
     register: java_present
 
-
   - debug:
       msg: "Java not Installed"
     when:  java_present.stat.exists
 
-
   - import_tasks: tasks/java_install.yml
     when: not java_present.stat.exists
 
-
   - debug:
       msg: "Proxy is activated? {{ global_vars.disabled_proxy }}"
-
-
 
   - import_tasks: tasks/certificates.yml
     when: global_vars.disabled_proxy

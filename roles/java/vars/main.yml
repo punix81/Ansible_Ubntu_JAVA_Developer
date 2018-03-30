@@ -1,6 +1,6 @@
-download_url: http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.tar.gz
 
-#download_folder: {{global_vars.home_path}}/java
-#java_install_dir: "{{global_vars.home_path}}/java/jdk1.8.0_05"
-#java_archive: "{{global_vars.home_path}}/java/jdk-8u5-linux-x64.tar.gz"
-#cacerts_path: "{{global_vars.home_path}}/java/jdk1.8.0_05/jre/lib/security/"
+#download_url: http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.tar.gz
+
+#http://download.oracle.com/otn-pub/java/jdk/10+46/76eac37278c24557a3c4199677f19b62/jdk-10_linux-x64_bin.tar.gz
+##http://download.oracle.com/otn-pub/java/jdk/9.0.4+11/c2514751926b4512b076cc82f959763f/jdk-9.0.4_linux-x64_bin.tar.gz
+##http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.tar.gz

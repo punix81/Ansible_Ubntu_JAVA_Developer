@@ -15,7 +15,7 @@
 #     - name: maven
 #     - name: intellij
 #     - name: nodejs
-     - name: angular-cli
+#    - name: angular-cli
 #     - name: curl
 #     - name: docker
 #     - name: webpack
@@ -25,9 +25,9 @@
 #     - name: soapui
 #     - name: atom
 #     - name: kitematic
-#    - name: desktop-preferences
+    - name: desktop-preferences
 #     - name: desktop-cleanup
-#     - name: wallpaper
+    - name: wallpaper
 
 #  tasks:
 #     - name: Reboot ubuntu

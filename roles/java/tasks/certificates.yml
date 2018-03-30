@@ -1,0 +1,12 @@
+ ---
+  - name: Rename default cacert to cacert old
+    command: mv {{global_vars.home_path}}/java/jdk1.8.0_05/jre/lib/security//cacerts {{global_vars.home_path}}/java/jdk1.8.0_05/jre/lib/security//cacerts_old
+
+  - name: Replace default Cacert file to your version
+    copy:
+       src:   certificates/cacerts
+       dest: '{{global_vars.home_path}}/java/jdk1.8.0_05/jre/lib/security/'
+       owner: dev
+       group: dev
+       mode: 0755
+       backup: yes

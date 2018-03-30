@@ -1,8 +1,38 @@
 ---
-  - name: check if java is installed
+  - name: Include global_vars
+    include_vars:
+      file: '../vars/all.yml'
+      name:  global_vars
+
+  - debug:
+      msg: "Home path {{ global_vars.home_path }}"
+
+
+  - name: Check if java is installed
     stat:
-      path={{java_install_dir}}
+      path={{global_vars.home_path}}/java
     register: java_present
+
+
+  - debug:
+      msg: "Java not Installed"
+    when: not java_present.stat.exists
+
 
   - import_tasks: tasks/java_install.yml
     when: not java_present.stat.exists
+
+
+  - debug:
+      msg: "Install certificates? {{ global_vars.no_proxy }} "
+
+
+#    when: not java_present.stat.exists
+
+
+
+
+
+
+
+

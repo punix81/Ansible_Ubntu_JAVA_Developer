@@ -4,14 +4,14 @@
       file: '../vars/all.yml'
       name:  global_vars
 
+
   - name: check if Intellij is installed
     stat:
-      path={{intellij_install_dir}}
+      path={{global_vars.home_path}}/ide
     register: intellij_present
 
   - import_tasks: tasks/idea_install.yml
     when: not intellij_present.stat.exists
-
 
   - name: Inotify Watches Limit
     blockinfile:
@@ -20,7 +20,12 @@
         block: |
             fs.inotify.max_user_watches = 1048576
 
-
   - name:  Install cert tools
     command: sysctl -p --system
     become: true
+
+  - debug:
+      msg: "Proxy is activated? {{ global_vars.disabled_proxy }}"
+
+#  - import_tasks: tasks/certificates.yml
+#    when: global_vars.disabled_proxy

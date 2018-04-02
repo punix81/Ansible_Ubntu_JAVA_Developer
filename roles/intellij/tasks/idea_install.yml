@@ -19,10 +19,10 @@
   debug: msg={{intellij_url}}
 
 - name: Ensure presence of opt
-  file: path={{intellij_install_dir}} state=directory
+  file: path={{global_vars.home_path}}/ide state=directory
 
 - name: Download intellij
-  get_url: url={{intellij_url}} dest={{intellij_install_dir}}/idea_{{intellij_version}}.archive
+  get_url: url={{intellij_url}} dest={{global_vars.home_path}}/ide/idea_{{intellij_version}}.archive
   register: intellij_out
 
 # show the content of intellij_out var
@@ -32,16 +32,16 @@
 - name: Unarchive
   unarchive:
     copy: no
-    src: "{{intellij_install_dir}}/idea_{{intellij_version}}.archive"
-    dest: "{{intellij_install_dir}}"
-    creates: "{{intellij_install_dir}}/idea-IU-{{intellij_build}}"
+    src: "{{global_vars.home_path}}/ide/idea_{{intellij_version}}.archive"
+    dest: "{{global_vars.home_path}}/ide"
+    creates: "{{global_vars.home_path}}/ide/idea-IU-{{intellij_build}}"
 
 
 - set_fact:
-   intellij_home: "{{intellij_install_dir}}/idea-IU-{{intellij_build}}"
+   intellij_home: "{{global_vars.home_path}}/ide/idea-IU-{{intellij_build}}"
 
 - set_fact:
-   intellij_archive: "{{intellij_install_dir}}/idea_{{intellij_version}}.archive"
+   intellij_archive: "{{global_vars.home_path}}/ide/idea_{{intellij_version}}.archive"
 
 - name: Clean up
   file: state=absent path={{intellij_archive}}
@@ -60,6 +60,7 @@
 
 - name: Ensure intellij bin exist
   template: src=intellij.j2 dest=/usr/bin/intellij mode=755
+  become: true
   tags: ["configuration","intellij"]
 
 - name: Ensure intellij shortcut is present
@@ -67,23 +68,13 @@
   tags: ["configuration","intellij"]
 
 
-- name: Intellij Set permission to dev user
-  command: "{{ item }}"
-  with_items:
-      - chmod 644 /usr/share/applications/intellij.desktop
-      - chown root:root /usr/share/applications/intellij.desktop
+# - name: Intellij Set permission to dev user
+#   command: "{{ item }}"
+#   with_items:
+#       - chmod 644 /usr/share/applications/intellij.desktop
+#       - chown root:root /usr/share/applications/intellij.desktop
 
-- name: Rename default cacert to cacert_old
-  command: mv {{cacerts_path_ide}}/cacerts {{cacerts_path_ide}}/cacerts_old
 
-- name: Replace default Cacert file to bit version
-  copy:
-    src:   certificates/cacerts
-    dest: '{{cacerts_path_ide}}'
-    owner: dev
-    group: dev
-    mode: 0755
-    backup: yes
 
 - stat:
     path: "{{projects_folder}}"
@@ -98,9 +89,7 @@
     state: directory
     group: dev
     owner: dev
-    mode: 0755
   when: p.stat.isdir is not defined
-
 
 - name: Ensure presence of .IdeaCOnfiguration
   file: path={{intellij_default_option_dir}}/options state=directory group=dev owner=dev mode=755
@@ -113,17 +102,10 @@
   template: src=colors.scheme.xml  dest={{intellij_default_option_dir}}/options group=dev owner=dev mode=755
   tags: ["configuration","intellij"]
 
-#- name: Set the default Proxy for Intellij
-#  template: src=proxy.settings.xml  dest={{intellij_default_option_dir}}/options group=dev owner=dev mode=755
-#  tags: ["configuration","intellij"]
+- name: Set the default Proxy for Intellij
+  template: src=proxy.settings.xml  dest={{intellij_default_option_dir}}/options group=dev owner=dev mode=755
+  when: global_vars.disabled_proxy
 
 - name: Set the default JDK for Intellij
   template: src=jdk.table.xml dest={{intellij_default_option_dir}}/options group=dev owner=dev mode=755
   tags: ["configuration","intellij"]
-
-
-- name: Intellij Set permission to dev user
-  command: "{{ item }}"
-  with_items:
-      - chmod -R 755 {{intellij_install_dir}}
-      - chown -R dev {{intellij_install_dir}}

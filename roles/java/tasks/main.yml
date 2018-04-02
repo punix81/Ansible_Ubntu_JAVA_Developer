@@ -24,7 +24,3 @@
 
   - import_tasks: tasks/certificates.yml
     when: global_vars.disabled_proxy
-
-
-
-

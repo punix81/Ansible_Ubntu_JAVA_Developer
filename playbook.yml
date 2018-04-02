@@ -13,7 +13,7 @@
 #     - name: proxy
      - name: java
 #     - name: maven
-#     - name: intellij
+     - name: intellij
 #     - name: nodejs
 #     - name: angular-cli
 #     - name: curl

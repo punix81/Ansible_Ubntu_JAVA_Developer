@@ -1,3 +1,14 @@
+- name: Ensure JAVA is Install
+  include_role:
+    name: java
+  when: not idontwanttorun
+
+- name: Ensure maven is Install
+  include_role:
+    name: maven
+  when: not idontwanttorun
+
+
 - name: Find latest version
   uri:
     url: "https://data.services.jetbrains.com/products/releases?code=IIU&latest=true&type=release"

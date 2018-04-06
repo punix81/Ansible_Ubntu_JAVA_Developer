@@ -4,26 +4,31 @@
       file: '../vars/all.yml'
       name:  global_vars
 
+  - debug:
+    msg: "{{ global_vars.no_proxy }}"
+
+
   - name: configure environment proxys
     blockinfile:
         dest: /etc/environment
         insertafter: EOF
         block: |
-            no_proxy="localhost, 127.0.0.1, .admin.ch"
-            http_proxy="{{global_vars.http_proxy}}/"
-            https_proxy="{{global_vars.https_proxy}}/"
+            no_proxy="localhost, 127.0.0.1, {{global_vars.no_proxy}}"
+            http_proxy="http://{{global_vars.proxy}}:{{global_vars.port}}/"
+            https_proxy="http://{{global_vars.proxy}}:{{global_vars.port}}/"
+    when: global_vars.enable_proxy
 
   - name: Prepare configure proxys for typings
     copy:
       content: '{
-                    "proxy": "{{global_vars.http_proxy}}"
+                    "proxy": "{{global_vars.proxy}}:{{global_vars.port}}"
                 }'
-      dest: '{{user_home}}.typingsrc'
+      dest: '{{global_vars.user_home}}.typingsrc'
       force: no
       group: dev
       owner: dev
       mode: 0755
-
+    when: global_vars.enable_proxy
 
   - name: Prepare configure proxys for npmrc
     copy:
@@ -33,31 +38,30 @@
 
                 strict-ssl=false
 
-                npm set proxy {{global_vars.http_proxy}}/'
+                npm set proxy http://{{global_vars.proxy}}:{{global_vars.port}}/'
 
-      dest: '{{user_home}}.npmrc'
+      dest: '{{global_vars.user_home}}.npmrc'
       force: yes
       group: dev
       owner: dev
       mode: 0755
+    when: global_vars.enable_proxy
 
   - name: Prepare configure proxys for curlrc
     copy:
-      content: 'proxy = http://{{global_vars.proxy}}:8080/'
-      dest: '{{user_home}}.curlrc'
+      content: 'proxy = http://{{global_vars.proxy}}:{{global_vars.port}}/'
+      dest: '{{global_vars.user_home}}.curlrc'
       force: no
       group: dev
       owner: dev
       mode: 0755
-
-  - name: Print included .yml files
-    debug:
-      msg: "Attempted to include {{ global_vars.user_mail }}"
+    when: global_vars.enable_proxy
 
 
-  - name: Prepare configure proxys for gitconfig
+
+  - name: Prepare configure proxys for gitconfig (Advence Config)
     copy:
-      content: '[http "http://stash.eap.bit.admin.ch/"]
+      content: '[http "http://{{ global_vars.git_url }}/"]
 
                     proxy = ""
 
@@ -69,14 +73,14 @@
 
                 [http]
 
-                    proxy = {{global_vars.http_proxy}}
+                    proxy = http://{{global_vars.proxy}}:{{global_vars.port}}
 
                     sslVerify=false
 
 
                 [https]
 
-                    proxy = {{global_vars.https_proxy}}
+                    proxy = http://{{global_vars.proxy}}:{{global_vars.port}}
 
 
                 [user]
@@ -85,18 +89,18 @@
 
                     email = {{ global_vars.user_mail }}
 
-                [http "https://stash.eap.bit.admin.ch/"]
+                [http "https://{{ global_vars.git_url }}/"]
 
                     proxy ='
-      dest: '{{user_home}}.gitconfig'
+      dest: '{{ global_vars.user_home}}.gitconfig'
       force: no
       group: dev
       owner: dev
       mode: 0755
-
+    when: global_vars.enable_proxy
 
   - stat:
-      path: "{{development_path}}"
+      path: "{{ global_vars.home_path }}"
     register: p
   - debug:
       msg: "Path exists and is a directory"
@@ -104,42 +108,26 @@
 
   - name: Creates development directory if not exite
     file:
-      path: "{{development_path}}"
+      path: "{{ global_vars.home_path }}"
       state: directory
       group: dev
       owner: dev
       mode: 0755
     when: p.stat.isdir is not defined
 
-#    sudo apt-get install gcc python-dev python-pip
-#    pip install psutil
-  #gsettings list-recursively org.gnome.system.proxy
-  - name: Configure network proxy use-same-proxy
-    command: gsettings set org.gnome.system.proxy use-same-proxy false
-
-  - name: Configure network proxy mode
-    command: gsettings set org.gnome.system.proxy mode 'manual'
-
-  - name: Configure network proxy autoconfig-url
-    command: gsettings set org.gnome.system.proxy autoconfig-url 'http://proxypac.efd.admin.ch/proxy.pac'
-
-  - name: Configure network proxy host
-    command: gsettings set org.gnome.system.proxy.http host '{{global_vars.proxy}}'
-
-  - name: Configure network proxy port http
-    command: gsettings set org.gnome.system.proxy.http port 8080
-
-  - name: Configure network proxy enabled
-    command: gsettings set org.gnome.system.proxy.http enabled false
-
-  - name: Configure network proxy host
-    command: gsettings set org.gnome.system.proxy.https host '{{global_vars.proxy}}'
-
-  - name: Configure network proxy host https
-    command: gsettings set org.gnome.system.proxy.https port {{global_vars.port}}
-
-  - name: Configure network proxy ignore-hosts
-    command: gsettings set org.gnome.system.proxy ignore-hosts "['localhost', '127.0.0.0/8', '::1', '.admin.ch']"
+  - name: Configure network ubuntu proxy 
+    command: "{{ item }}"
+    with_items:
+      -  gsettings set org.gnome.system.proxy use-same-proxy false
+      -  gsettings set org.gnome.system.proxy mode 'manual'
+      -  gsettings set org.gnome.system.proxy autoconfig-url '{{global_vars.proxy_pac}}'
+      -  gsettings set org.gnome.system.proxy.http host '{{global_vars.proxy}}'
+      -  gsettings set org.gnome.system.proxy.http port {{global_vars.port}}
+      -  gsettings set org.gnome.system.proxy.http enabled false
+      -  gsettings set org.gnome.system.proxy.https host '{{global_vars.proxy}}'
+      -  gsettings set org.gnome.system.proxy.https port {{global_vars.port}}
+      -  gsettings set org.gnome.system.proxy ignore-hosts "['localhost', '127.0.0.0/8', '::1', '{{global_vars.no_proxy}}']"
+    when: global_vars.enable_proxy
 
   - name: Ensure dpkg lock file is removed
     file:
@@ -160,6 +148,7 @@
     file:
       state: touch
       path: "/etc/apt/apt.conf.d/proxy"
+    when: global_vars.enable_proxy
 
   - name: configure apt proxy
     blockinfile:
@@ -167,9 +156,9 @@
         insertafter: EOF
         marker: ""
         block: |
-            Acquire::http::proxy "{{global_vars.http_proxy}}/";
-            Acquire::https::proxy "{{global_vars.https_proxy}}/";
-
+            Acquire::http::proxy "http://{{global_vars.proxy}}:{{global_vars.port}}/";
+            Acquire::https::proxy "http://{{global_vars.proxy}}:{{global_vars.port}}/";
+    when: global_vars.enable_proxy and global_vars.enable_proxy
 
   - name: Update APT package manager repositories cache
     become: true

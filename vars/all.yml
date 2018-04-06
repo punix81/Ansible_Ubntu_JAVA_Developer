@@ -1,18 +1,25 @@
 ---
 ########################################################
 # PLEASE ENTER YOUR FULL NAME AND EMAIL!
-# EXAMPLE : user_display_name: "Paulo Lopes"
-#           user_mail: "paulo.lopes@my.mail.ch"
+# EXAMPLE : user_display_name: "Jonh Doe"
+#           user_mail: "Jonh.Doe@my.mail.ch"
 ########################################################
-user_display_name: "Paulo Lopes"
-user_mail: "lopespaulo18@gmail.com"
+user_display_name: "Jonh Doe"
+user_mail: "Jonh.Doe@bit.admin.ch"
 
 
 #########################################################
 # INSTALLATION DIRECTORY
 # EXAMPLE /home/'USER'/'FOLDER'
 #########################################################
+user_home: /home/dev/
 home_path: /home/dev/development
+
+
+#########################################################
+# GIT URL  
+#########################################################
+git_url: 
 
 
 #########################################################
@@ -30,22 +37,23 @@ java_download_url: http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b
 
 ########################################################
 # IF YOU HAVE A PROXY
-# IF YOU DON'T HAVE ANY PROXY THE DEFAULT VALUE IS TRUE
+# IF YOU DON'T HAVE ANY PROXY THE DEFAULT VALUE IS FALSE
 #########################################################
-disabled_proxy: true
+enable_proxy: false
 
 #########################################################
-## THIS BLOCK IS VALID ONLY IF NO_PROXY IS FALSE
+## THIS BLOCK IS VALID ONLY IF NO_PROXY IS TRUE
 #########################################################
 
-proxy: proxy-xxx.xxx.ch
+proxy: 
 port: 8080
+no_proxy: 
 
-nexus_url: XXXXXXXX
-proxy_pac: XXXXXXXX
+nexus_url: 
+proxy_pac: 
 
 
 #########################################################
 ## IF YOU HAVE A FAVORITE WALLPAPERS
 #########################################################
-wallpaper_path: /home/dev/development/projects/Ansible_Ubuntu_17/roles/wallpaper/templates/Ubuntu-Wall.PNG
+wallpaper_path: /home/dev/Desktop/jeap-ansible/roles/wallpaper/templates/Ubuntu-Wall.PNG

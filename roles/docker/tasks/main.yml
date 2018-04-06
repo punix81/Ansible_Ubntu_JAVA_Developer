@@ -7,4 +7,3 @@
 - import_tasks: docker-install.yml
   when: ansible_os_family == 'Debian'
 
-

@@ -29,9 +29,3 @@
 - name: Install kitematic .deb package
   apt:
     deb: /home/dev/development/kitematic/dist/Kitematic_{{kitematic_version}}_amd64.deb
-
-
-
-
-  convert ansible.jpg  -pointsize 20  -draw "gravity south  fill black  text 0,12 'Copyright'  fill white  text 1,11 'Copyright' "  ansible_out.jpg
-

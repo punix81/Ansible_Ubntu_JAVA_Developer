@@ -44,6 +44,7 @@
     creates: "{{ sqlDeveloper_exe_path }}"
     dest: "{{ sqlDeveloper_install_dir }}"
     src: "{{ sqlDeveloper_archive_path }}"
+  become: true
 
 
 - name: initialize menu shortcut

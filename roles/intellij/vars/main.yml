@@ -17,15 +17,15 @@ intellij_theme: Darcula
 
 
 
-#TODO il faut  recuperer la variable jdk dans les var global
-# Deprecated: use users.intellij_jdks and users.intellij_default_jdk instead
-# Location of the default JDK for IntelliJ IDEA projects
-intellij_default_jdk_version: 1.8.0_05
-intellij_default_jdk_home: development/java/jdk{{intellij_default_jdk_version}}
-
-
-# Location of the default Apache Maven installation for IntelliJ IDEA projects
+###TODO il faut  recuperer la variable jdk dans les var global
+### Deprecated: use users.intellij_jdks and users.intellij_default_jdk instead
+### Location of the default JDK for IntelliJ IDEA projects
+intellij_default_jdk_version: "{{global_vars.java_version}}"
+intellij_default_jdk_home: "{{global_vars.home_path}}/java/jdk{{global_vars.java_version}}"
+#
+#
+## Location of the default Apache Maven installation for IntelliJ IDEA projects
 intellij_default_maven_home: /home/dev/development/maven/maven-3.5.2
-
-# Location of the default configuration for IntelliJ IDEA
-intellij_default_option_dir: /home/dev/.IdeaIC/config
+#
+## Location of the default configuration for IntelliJ IDEA
+intellij_default_option_dir: "{{global_vars.user_home}}.IdeaIC/config"

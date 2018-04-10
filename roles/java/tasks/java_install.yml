@@ -14,8 +14,27 @@
   - name: Fix ownership
     file: state=directory path={{global_vars.home_path}}/java/jdk{{global_vars.java_version}} owner=dev group=dev recurse=yes
 
-  - name: Unpack archive
-    command: "tar -zxf {{global_vars.home_path}}/java/jdk-linux-x64.tar.gz --strip 1 -C {{global_vars.home_path}}/java/jdk{{global_vars.java_version}} "
+#  - name: Unpack archive
+#    command: "tar -zxf {{global_vars.home_path}}/java/jdk-linux-x64.tar.gz --strip 1 -C {{global_vars.home_path}}/java/jdk{{global_vars.java_version}} "
+#    owner: dev
+#    group: dev
+#    mode: 0755
+
+
+
+  - name: Unarchive a file that is already on the remote machine
+    unarchive:
+      extra_opts: ['--strip-components=1']
+      src: "{{global_vars.home_path}}/java/jdk-linux-x64.tar.gz"
+      dest: "{{global_vars.home_path}}/java/jdk{{global_vars.java_version}}"
+      copy: no
+      owner: dev
+      group: dev
+      mode: 0755
+
+
+
+
 
   - name: Clean up
     file: state=absent path={{global_vars.home_path}}/java/jdk-linux-x64.tar.gz

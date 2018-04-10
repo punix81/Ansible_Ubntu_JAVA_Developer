@@ -4,8 +4,8 @@
 # EXAMPLE : user_display_name: "Jonh Doe"
 #           user_mail: "Jonh.Doe@my.mail.ch"
 ########################################################
-user_display_name: "Jonh Doe"
-user_mail: "Jonh.Doe@bit.admin.ch"
+user_display_name: "Paulo lopes"
+user_mail: "lopespaulo18@gmail.com"
 
 
 #########################################################
@@ -19,7 +19,7 @@ home_path: /home/dev/development
 #########################################################
 # GIT URL
 #########################################################
-git_url: 
+git_url:
 
 
 #########################################################
@@ -45,12 +45,12 @@ enable_proxy: false
 ## THIS BLOCK IS VALID ONLY IF NO_PROXY IS TRUE
 #########################################################
 
-proxy: 
+proxy:
 port: 8080
-no_proxy: 
+no_proxy:
 
-nexus_url: 
-proxy_pac: 
+nexus_url:
+proxy_pac:
 
 
 #########################################################

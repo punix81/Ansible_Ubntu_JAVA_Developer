@@ -133,16 +133,19 @@
     file:
       state: absent
       path: "/var/lib/dpkg/lock"
+    become: true
 
   - name: Ensure archive lock file is removed
     file:
       state: absent
       path: "/var/cache/apt/archives/lock"
+    become: true
 
   - name: Ensure lists lock file is removed
     file:
       state: absent
       path: "/var/lib/apt/lists/lock "
+    become: true
 
   - name: Ensure apt.conf.d/proxy existe
     file:
@@ -160,33 +163,33 @@
             Acquire::https::proxy "http://{{global_vars.proxy}}:{{global_vars.port}}/";
     when: global_vars.enable_proxy and global_vars.enable_proxy
 
-  - name: Update APT package manager repositories cache
-    become: true
-    apt:
-      update_cache: yes
-
-  - name: Upgrade installed packages
-    become: true
-    apt:
-      upgrade: yes
-    register: aptout
+  # - name: Update APT package manager repositories cache
+  #   become: true
+  #   apt:
+  #     update_cache: yes
+  #
+  # - name: Upgrade installed packages
+  #   become: true
+  #   apt:
+  #     upgrade: yes
+  #   register: aptout
 
   # show the content of aptout var
-  - debug: var=aptout
-
-  - name: Ensure Pip is installed.
-    package:
-      name: "{{ pip_package }}"
-      state: present
-
-  - name: Ensure pip_install_packages are installed.
-    pip:
-      name: "{{ item.name | default(item) }}"
-      version: "{{ item.version | default(omit) }}"
-      state: "{{ item.state | default(omit) }}"
-    with_items: "{{ pip_install_packages }}"
-
-  - name: Install gitHub3
-    command: "{{ item }}"
-    with_items:
-        - pip install --pre github3.py
+  # - debug: var=aptout
+  #
+  # - name: Ensure Pip is installed.
+  #   package:
+  #     name: "{{ pip_package }}"
+  #     state: present
+  #
+  # - name: Ensure pip_install_packages are installed.
+  #   pip:
+  #     name: "{{ item.name | default(item) }}"
+  #     version: "{{ item.version | default(omit) }}"
+  #     state: "{{ item.state | default(omit) }}"
+  #   with_items: "{{ pip_install_packages }}"
+  #
+  # - name: Install gitHub3
+  #   command: "{{ item }}"
+  #   with_items:
+  #       - pip install --pre github3.py

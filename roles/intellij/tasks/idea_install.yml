@@ -71,6 +71,7 @@
 - name: Ensure intellij shortcut is present
   template: src=intellij.desktop.j2 dest=/usr/share/applications/intellij.desktop
   tags: ["configuration","intellij"]
+  become: true
 
 - stat:
     path: "{{projects_folder}}"

@@ -18,6 +18,9 @@ $ sudo apt-add-repository ppa:ansible/ansible
 $ sudo apt-get update
 $ sudo apt-get install ansible
 ```
+### Configure Ansible
+Edit /etc/ansible/ansible.cfg file
+
 ### Git Installation
 ```
 $ sudo apt-get update

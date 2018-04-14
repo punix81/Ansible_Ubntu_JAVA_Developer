@@ -12,8 +12,6 @@ cacerts_path_ide: "{{intellij_home}}/jre64/lib/security"
 # Location of the default directory for IntelliJ IDEA projects
 projects_folder: "/home/dev/development/projects"
 
-# Appearance of Intellij (Darcula, GTK+ or Intellij)
-intellij_theme: Darcula
 
 
 

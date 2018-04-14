@@ -106,3 +106,7 @@
 - name: Set the default JDK for Intellij
   template: src=jdk.table.xml dest={{intellij_default_option_dir}}/options group=dev owner=dev mode=755
   tags: ["configuration","intellij"]
+
+- name: Set the default JDK for Intellij
+  template: src=vcs.xml dest={{intellij_default_option_dir}}/options group=dev owner=dev mode=755
+  tags: ["configuration","intellij"]

@@ -2,7 +2,7 @@
   command: mv {{cacerts_path_ide}}/cacerts {{cacerts_path_ide}}/cacerts_old
   when: global_vars.enable_proxy
 
-- name: Replace default Cacert file to bit version
+- name: Replace default Cacert file to your version
   copy:
     src:   certificates/cacerts
     dest: '{{cacerts_path_ide}}'

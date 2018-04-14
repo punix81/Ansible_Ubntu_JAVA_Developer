@@ -4,4 +4,4 @@
 
  echo "Install Jeap-Ansible"
 
- ansible-playbook playbook.yml --connection=local --ask-pass -u dev -become-method=sudo   --extra-vars "ansible_sudo_pass=secret"
+ ansible-playbook playbook.yml --connection=local -become-method=sudo   --extra-vars "ansible_sudo_pass=secret"

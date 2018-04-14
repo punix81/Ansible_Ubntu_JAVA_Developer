@@ -10,6 +10,7 @@
     register: intellij_present
 
   - import_tasks: tasks/idea_install.yml
+    when: not intellij_present.stat.exists
 
   - name: Inotify Watches Limit
     blockinfile:

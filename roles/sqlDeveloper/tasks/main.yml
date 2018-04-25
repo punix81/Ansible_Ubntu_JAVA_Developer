@@ -1,15 +1,4 @@
 ---
-#- name: ensure required APT packages are installed
-#  apt:
-#    autoremove: yes
-#    cache_valid_time: 3600
-#    pkg: "{{ item }}"
-#    state: present
-#    update_cache: yes
-#  become: yes
-#  with_items:
-#    - unzip
-
 
 - name: create sqlDeveloper group
   file:
@@ -41,9 +30,10 @@
 
 - name: unpack sqldeveloper archive
   unarchive:
-    creates: "{{ sqlDeveloper_exe_path }}"
-    dest: "{{ sqlDeveloper_install_dir }}"
+    copy: no
     src: "{{ sqlDeveloper_archive_path }}"
+    dest: "{{ sqlDeveloper_install_dir }}"
+    creates: "{{ sqlDeveloper_exe_path }}"
   become: true
 
 

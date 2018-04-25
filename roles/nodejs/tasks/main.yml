@@ -10,8 +10,8 @@
     state: absent
     path: "/var/lib/dpkg/lock"
 
-#- name: Ensure apt-transport-https is installed.
-#  apt: name=apt-transport-https state=present
+- name: Ensure apt-transport-https is installed.
+  apt: name=apt-transport-https state=present
 
 - name: Add Nodesource apt key.
   apt_key:

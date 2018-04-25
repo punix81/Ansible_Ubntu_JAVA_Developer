@@ -1,4 +1,10 @@
 ---
+  - name: Ensure http-proxy.conf existe
+    file:
+      state: touch
+      path: "/etc/systemd/system/docker.service.d/http-proxy.conf"
+    became : true
+
   - name: configure environment proxys
     blockinfile:
         dest: /etc/systemd/system/docker.service.d/http-proxy.conf
@@ -10,3 +16,4 @@
             Environment="no_proxy=127.0.0.1, localhost, {{global_vars.no_proxy}}"
             ExecStart=
             ExecStart=/usr/bin/dockerd --dns 131.102.100.110 --dns 131.102.37.142 --dns 8.8.8.8 --dns 8.8.4.4 -H fd://
+

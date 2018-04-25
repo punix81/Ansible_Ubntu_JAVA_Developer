@@ -1,7 +1,7 @@
 ---
 - name: Include global_vars
   include_vars:
-    file: '../vars/all.yml'
+    file: 'defaults/main.yml'
     name:  global_vars
 
 - import_tasks: docker-install.yml

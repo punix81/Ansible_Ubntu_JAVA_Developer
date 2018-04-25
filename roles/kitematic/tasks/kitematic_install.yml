@@ -1,0 +1,31 @@
+---
+
+- name: create kitematic install directory
+  file:
+    dest: "{{ kitematic_Home }}"
+    group: dev
+    owner: dev
+    mode: 0755
+    state: directory
+
+- name: Download kitematic
+  get_url: url={{kitematic_url}} dest={{kitematic_Home}}
+  register: kitematic_out
+
+- name: Unarchive
+  unarchive:
+    copy: no
+    src: "{{kitematic_Home}}/Kitematic-{{kitematic_version}}-Ubuntu.zip"
+    dest: "{{kitematic_Home}}"
+
+
+- name: kitematic Set permission to dev user
+  command: "{{ item }}"
+  with_items:
+    - chmod -R 755 {{kitematic_Home}}
+    - chown -R dev {{kitematic_Home}}
+
+
+- name: Install kitematic .deb package
+  apt:
+    deb: /home/dev/development/kitematic/dist/Kitematic_{{kitematic_version}}_amd64.deb

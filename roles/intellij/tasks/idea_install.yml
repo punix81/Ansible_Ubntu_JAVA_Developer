@@ -71,7 +71,6 @@
 - name: Ensure intellij shortcut is present
   template: src=intellij.desktop.j2 dest=/usr/share/applications/intellij.desktop
   tags: ["configuration","intellij"]
-  become: true
 
 - stat:
     path: "{{projects_folder}}"
@@ -107,6 +106,18 @@
   template: src=jdk.table.xml dest={{intellij_default_option_dir}}/options group=dev owner=dev mode=755
   tags: ["configuration","intellij"]
 
-- name: Set the default JDK for Intellij
-  template: src=vcs.xml dest={{intellij_default_option_dir}}/options group=dev owner=dev mode=755
-  tags: ["configuration","intellij"]
+
+
+- name: Rename default cacert to cacert_old
+  command: mv  {{intellij_home}}/jre64/lib/security/cacerts {{intellij_home}}/jre64/lib/security/cacerts_old
+  when: global_vars.enable_proxy
+
+- name: Replace default Cacert file to bit version
+  copy:
+    src:   certificates/cacerts
+    dest: '{{intellij_home}}/jre64/lib/security'
+    owner: dev
+    group: dev
+    mode: 0755
+    backup: yes
+  when: global_vars.enable_proxy

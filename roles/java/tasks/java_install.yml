@@ -13,8 +13,8 @@
 
   - name: Fix ownership
     file: state=directory path={{global_vars.home_path}}/java/jdk{{global_vars.java_version}} owner=dev group=dev recurse=yes
-
-#  - name: Unpack archive
+#
+#  - name: Unarchive a file that is already on the remote machine
 #    command: "tar -zxf {{global_vars.home_path}}/java/jdk-linux-x64.tar.gz --strip 1 -C {{global_vars.home_path}}/java/jdk{{global_vars.java_version}} "
 #    owner: dev
 #    group: dev

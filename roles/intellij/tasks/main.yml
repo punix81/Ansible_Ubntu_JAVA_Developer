@@ -1,7 +1,7 @@
 ---
   - name: Include global_vars
     include_vars:
-      file: '../vars/all.yml'
+      file: 'defaults/main.yml'
       name:  global_vars
 
   - name: check if Intellij is installed
@@ -23,8 +23,3 @@
     command: sysctl -p --system
     become: true
 
-  - debug:
-      msg: "Proxy is activated? {{ global_vars.enable_proxy }}"
-
-  - import_tasks: tasks/certificates.yml
-    when: global_vars.enable_proxy

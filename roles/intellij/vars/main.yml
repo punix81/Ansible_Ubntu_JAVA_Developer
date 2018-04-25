@@ -7,11 +7,13 @@ download_url: "http://data.services.jetbrains.com/products/releases?code=IIU&lat
 # intellij_install_dir: /home/dev/development/ide
 
 # Set certificat on default IntelliJ IDEA  jre
-cacerts_path_ide: "{{intellij_home}}/jre64/lib/security"
+cacerts_path_ide: "{{global_vars.home_path}}/ide/idea-IU-{{intellij_build}}/ide/jre64/lib/security"
 
 # Location of the default directory for IntelliJ IDEA projects
 projects_folder: "/home/dev/development/projects"
 
+# Appearance of Intellij (Darcula, GTK+ or Intellij)
+intellij_theme: Darcula
 
 
 

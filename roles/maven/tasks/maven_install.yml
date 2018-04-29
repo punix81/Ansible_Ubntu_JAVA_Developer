@@ -2,8 +2,8 @@
   - name: Create destination directory
     file:
       path: "{{ maven_destination_directory }}"
-      owner: dev
-      group: dev
+      owner: '{{ global_vars.user_session }}'
+      group: '{{ global_vars.user_session }}'
       mode: 0755
       state: directory
 
@@ -12,8 +12,8 @@
       src: http://apache.mirrors.spacedump.net/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
       dest: "{{ maven_destination_directory }}"
       remote_src: yes
-      owner: dev
-      group: dev
+      owner: '{{ global_vars.user_session }}'
+      group: '{{ global_vars.user_session }}'
       mode: 0755
 
   - name: Set M2_HOME
@@ -25,8 +25,8 @@
     file:
       src: "{{ maven_destination_directory }}/apache-maven-{{ maven_version }}/bin/mvn"
       dest: /usr/local/bin/mvn
-      owner: dev
-      group: dev
+      owner: '{{ global_vars.user_session }}'
+      group: '{{ global_vars.user_session }}'
       state: link
 
 #  - name: Get maven bash completion
@@ -38,7 +38,7 @@
 
   - name: Ensure M2_HOME is sourced from the .profile
     blockinfile:
-      dest: "/home/dev/.profile"
+      dest: "~/.profile"
       block: |
        M2_HOME="{{maven_name}}"
        PATH="$M2_HOME/bin:$PATH"
@@ -47,7 +47,7 @@
       create: yes
 
   - name: Fix ownership
-    file: state=directory path={{maven_m2}} owner=dev group=dev recurse=yes mode=0755
+    file: state=directory path={{maven_m2}} owner='{{ global_vars.user_session }}' group='{{ global_vars.user_session }}' recurse=yes mode=0755
 
 
   - name: Ensure jeap configuration  is correct on .M2 folder
@@ -67,4 +67,4 @@
     command: "{{ item }}"
     with_items:
         - chmod -R 755 {{ maven_destination_directory }}/apache-maven-{{ maven_version }}
-        - chown -R dev {{ maven_destination_directory }}/apache-maven-{{ maven_version }}
+        - chown -R '{{ global_vars.user_session }}' {{ maven_destination_directory }}/apache-maven-{{ maven_version }}

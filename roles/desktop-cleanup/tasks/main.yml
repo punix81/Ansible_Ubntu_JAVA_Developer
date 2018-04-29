@@ -44,4 +44,4 @@
 - name : Run xdg-user-dirs-update
   shell: xdg-user-dirs-update
   become: true
-  become_user: "dev"
+  become_user: '{{ global_vars.user_session }}'

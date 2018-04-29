@@ -15,13 +15,13 @@
      - name: curl
      - name: docker
      - name: tomcat
-     - name: sqlDeveloper
+     # - name: sqlDeveloper
      - name: soapui
-     - name: atom
+     # - name: atom
      - name: kitematic
      - name: desktop-preferences
      - name: desktop-cleanup
-     - name: wallpaper
+     # - name: wallpaper
 
   tasks:
     - name: Reboot ubuntu

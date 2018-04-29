@@ -56,7 +56,7 @@
 
 #  copy:
 #    src:   filesToRemote/sqlDeveloper/.sqldeveloper
-#    dest:  /home/dev/
+#    dest:  ~/
 #    mode: 0755
 #    backup: yes
 
@@ -66,7 +66,7 @@
     dest: "{{sqlDeveloper_config_dir}}/17.4.0/product.conf"
     insertafter: 'SetJavaHome /path/jdk'
     block: |
-        SetJavaHome /home/dev/development/java/jdk1.8.0_05
+        SetJavaHome ~/development/java/jdk1.8.0_05
 
 
 - name: SqlDeveloper Set permission to dev user

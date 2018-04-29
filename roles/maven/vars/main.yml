@@ -1,6 +1,6 @@
 maven_version: 3.5.2
 
-maven_destination_directory: /home/dev/development/maven
+maven_destination_directory: ~/development/maven
 
 maven_bin_url: http://apache.mirrors.spacedump.net/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz
 
@@ -8,4 +8,4 @@ maven_enable_bash_completion: true
 
 
 maven_name: "{{maven_destination_directory}}/maven-{{ maven_version }}"
-maven_m2: /home/dev/.m2/
+maven_m2: ~/.m2/

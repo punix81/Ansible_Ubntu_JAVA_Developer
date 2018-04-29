@@ -26,4 +26,4 @@
     - gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "[]"
     - gsettings set org.gnome.desktop.wm.keybindings begin-resize "[]"
   become: true
-  become_user: dev
+  become_user: '{{ global_vars.user_session }}'

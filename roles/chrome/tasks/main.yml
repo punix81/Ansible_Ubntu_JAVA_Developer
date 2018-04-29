@@ -20,9 +20,9 @@
 #- name: Remove old cert8.db
 #  file:
 #    state: absent
-#    path: "/home/dev/.mozilla/firefox/jn47vyip.default/cert8.db"
+#    path: "~/.mozilla/firefox/jn47vyip.default/cert8.db"
 
 #
 #- name: Add certificate for firefox
-#  template: src=cert8.db.j2  dest=/home/dev/.mozilla/firefox/jn47vyip.default group=dev owner=dev mode=755
+#  template: src=cert8.db.j2  dest=~/.mozilla/firefox/jn47vyip.default group=dev owner=dev mode=755
 #  tags: ["configuration","fiferfox"]

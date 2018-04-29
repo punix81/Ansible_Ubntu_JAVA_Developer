@@ -12,12 +12,13 @@ user_mail: "John.Doe@my.mail.com"
 # INSTALLATION DIRECTORY
 # EXAMPLE /home/'USER'/'FOLDER'
 #########################################################
-user_home: /home/dev/
-home_path: /home/dev/development
+user_session: paulo
+user_home: /home/paulo
+home_path: /home/paulo/development
 
 
 #########################################################
-# GIT URL
+# GIT URL. If you have a private git
 #########################################################
 git_url:
 
@@ -56,4 +57,4 @@ proxy_pac:
 #########################################################
 ## IF YOU HAVE A FAVORITE WALLPAPERS
 #########################################################
-wallpaper_path: /home/dev/Desktop/jeap-ansible/roles/wallpaper/templates/Ubuntu-Wall.PNG
+wallpaper_path: ~/Desktop/jeap-ansible/roles/wallpaper/templates/Ubuntu-Wall.PNG

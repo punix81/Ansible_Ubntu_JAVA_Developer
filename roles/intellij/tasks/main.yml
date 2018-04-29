@@ -22,4 +22,3 @@
   - name:  Install cert tools
     command: sysctl -p --system
     become: true
-

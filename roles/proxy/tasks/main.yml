@@ -25,8 +25,8 @@
                 }'
       dest: '{{global_vars.user_home}}.typingsrc'
       force: no
-      group: dev
-      owner: dev
+      group: '{{ global_vars.user_session }}'
+      owner: '{{ global_vars.user_session }}'
       mode: 0755
     when: global_vars.enable_proxy
 
@@ -42,8 +42,8 @@
 
       dest: '{{global_vars.user_home}}.npmrc'
       force: yes
-      group: dev
-      owner: dev
+      group: '{{ global_vars.user_session }}'
+      owner: '{{ global_vars.user_session }}'
       mode: 0755
     when: global_vars.enable_proxy
 
@@ -52,8 +52,8 @@
       content: 'proxy = http://{{global_vars.proxy}}:{{global_vars.port}}/'
       dest: '{{global_vars.user_home}}.curlrc'
       force: no
-      group: dev
-      owner: dev
+      group: '{{ global_vars.user_session }}'
+      owner: '{{ global_vars.user_session }}'
       mode: 0755
     when: global_vars.enable_proxy
 
@@ -94,8 +94,8 @@
                     proxy ='
       dest: '{{ global_vars.user_home}}.gitconfig'
       force: no
-      group: dev
-      owner: dev
+      group: '{{ global_vars.user_session }}'
+      owner: '{{ global_vars.user_session }}'
       mode: 0755
     when: global_vars.enable_proxy
 
@@ -110,8 +110,8 @@
     file:
       path: "{{ global_vars.home_path }}"
       state: directory
-      group: dev
-      owner: dev
+      group: '{{ global_vars.user_session }}'
+      owner: '{{ global_vars.user_session }}'
       mode: 0755
     when: p.stat.isdir is not defined
 

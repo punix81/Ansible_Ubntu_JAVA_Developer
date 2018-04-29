@@ -3,8 +3,8 @@
 - name: create kitematic install directory
   file:
     dest: "{{ kitematic_Home }}"
-    group: dev
-    owner: dev
+    group: '{{ global_vars.user_session }}'
+    owner: '{{ global_vars.user_session }}'
     mode: 0755
     state: directory
 
@@ -23,9 +23,9 @@
   command: "{{ item }}"
   with_items:
     - chmod -R 755 {{kitematic_Home}}
-    - chown -R dev {{kitematic_Home}}
+    - chown -R '{{ global_vars.user_session }}' {{kitematic_Home}}
 
 
 - name: Install kitematic .deb package
   apt:
-    deb: /home/dev/development/kitematic/dist/Kitematic_{{kitematic_version}}_amd64.deb
+    deb: ~/development/kitematic/dist/Kitematic_{{kitematic_version}}_amd64.deb

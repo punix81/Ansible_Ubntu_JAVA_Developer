@@ -18,7 +18,7 @@
 
 
 - name: Create docker service folder
-  file: state=directory path={{docker_service_folder}} owner=dev group=dev recurse=yes
+  file: state=directory path={{docker_service_folder}} owner='{{ global_vars.user_session }}' group='{{ global_vars.user_session }}' recurse=yes
 
 
 

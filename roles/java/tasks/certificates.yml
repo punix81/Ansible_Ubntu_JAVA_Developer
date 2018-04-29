@@ -16,8 +16,8 @@
     copy:
        src:   certificates/cacerts
        dest: '{{global_vars.home_path}}/java/jdk{{global_vars.java_version}}/jre/lib/security/'
-       owner: dev
-       group: dev
+       owner: '{{ global_vars.user_session }}'
+       group: '{{ global_vars.user_session }}'
        mode: 0755
        backup: yes
     when:  cacerts_present.stat.exists

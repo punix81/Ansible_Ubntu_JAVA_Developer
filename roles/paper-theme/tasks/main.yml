@@ -14,11 +14,18 @@
   - name: Update apt
     apt: update_cache=yes
 
-  - name: Install paper theme
-    become: yes
-    apt: pkg={{ item }} state=latest
-    with_items:
-      - paper-icon-theme
-      - paper-cursor-theme
-      - paper-gtk-theme
-    become: true
+  - name: Install the package "paper-icon-theme"
+    apt:
+      name: paper-icon-theme
+      state: present
+
+  - name: Install the package "paper-cursor-theme"
+    apt:
+      name: paper-cursor-theme
+      state: present
+
+  - name: Install the package "paper-cursor-theme"
+    apt:
+      name: paper-gtk-theme
+      state: present
+

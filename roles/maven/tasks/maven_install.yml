@@ -1,7 +1,7 @@
 ---
   - name: Create destination directory
     file:
-      path: "{{ maven_destination_directory }}"
+      path: "{{ global_vars.home_path }}/maven"
       owner: '{{ global_vars.user_session }}'
       group: '{{ global_vars.user_session }}'
       mode: 0755
@@ -10,7 +10,7 @@
   - name: Download and untar the maven binary file
     unarchive:
       src: http://apache.mirrors.spacedump.net/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
-      dest: "{{ maven_destination_directory }}"
+      dest: "{{ global_vars.home_path }}/maven"
       remote_src: yes
       owner: '{{ global_vars.user_session }}'
       group: '{{ global_vars.user_session }}'
@@ -19,7 +19,7 @@
 
   - name: Create a symlink to mvn
     file:
-      src: "{{ maven_destination_directory }}/apache-maven-{{ maven_version }}/bin/mvn"
+      src: "{{ global_vars.home_path }}/maven/apache-maven-{{ maven_version }}/bin/mvn"
       dest: /usr/local/bin/mvn
       owner: '{{ global_vars.user_session }}'
       group: '{{ global_vars.user_session }}'
@@ -29,7 +29,7 @@
     blockinfile:
       dest: "~/.profile"
       block: |
-       M2_HOME="{{maven_name}}"
+       M2_HOME="{{ global_vars.home_path }}/maven/maven-{{ maven_version }}"
        PATH="$M2_HOME/bin:$PATH"
       marker: '# {mark}  MANAGED BLOCK - exporte M2_HOME'
       insertbefore: EOF
@@ -43,12 +43,12 @@
     lineinfile:
         dest: /etc/environment
         insertafter: EOF
-        line: 'M2_HOME="{{ maven_destination_directory }}/apache-maven-{{ maven_version }}"'
+        line: 'M2_HOME="{{ global_vars.home_path }}/maven/apache-maven-{{ maven_version }}"'
 
 
 
   - name: M2_HOME Set permission to dev user
     command: "{{ item }}"
     with_items:
-        - chmod -R 755 {{ maven_destination_directory }}/apache-maven-{{ maven_version }}
-        - chown -R '{{ global_vars.user_session }}' {{ maven_destination_directory }}/apache-maven-{{ maven_version }}
+        - chmod -R 755 {{ global_vars.home_path }}/maven/apache-maven-{{ maven_version }}
+        - chown -R '{{ global_vars.user_session }}' {{ global_vars.home_path }}/maven/apache-maven-{{ maven_version }}

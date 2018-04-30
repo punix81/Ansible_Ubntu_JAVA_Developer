@@ -5,16 +5,17 @@
       name:  global_vars
 
   - debug:
-      msg: "Home path {{ global_vars.home_path }}"
+      msg: "Home path {{ global_vars.home_path }}/maven"
 
   - name: Check if maven is installed
     stat:
-      path={{maven_destination_directory}}
+      path={{ global_vars.home_path }}/maven
     register: maven_present
+
 
   - debug:
       msg: "Maven not Installed"
-    when:  maven_present.stat.exists
+    when:   maven_present.stat.exists
 
   - import_tasks: tasks/maven_install.yml
-    when: not maven_present.stat.exists
+    when: not  maven_present.stat.exists

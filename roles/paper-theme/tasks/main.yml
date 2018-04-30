@@ -23,7 +23,7 @@
   with_items:
     - paper-icon-theme
     - paper-cursor-theme
-    - paper-gtk-theme
+#    - paper-gtk-theme
   when: ansible_os_family == 'Debian'
   tags:
     - paper

@@ -1,5 +1,4 @@
 ---
----
 - name: Include global_vars
   include_vars:
     file: 'defaults/main.yml'

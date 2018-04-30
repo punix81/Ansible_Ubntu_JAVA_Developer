@@ -1,28 +1,18 @@
+---
+- name: Check if chrome is installed
+  shell: dpkg -l | grep -E '^ii' | grep google-chrome-stable
+  register: chrome_installed
+  ignore_errors: yes
 
-# apt tasks file for ansible-role-chrome
-# via http://linuxg.net/how-to-install-google-chrome-42-stable-on-the-most-popular-linux-systems-via-the-official-google-repository/
+- name: Install Chrome
+  include: install.yml
+  when: chrome_installed.rc != 0
 
-#- name: "apt | ensure Google linux signing key present"
-#  apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
-#
-#- name: "apt | ensure Google chrome repo present"
-#  apt_repository:
-#    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
-#    filename: "google-chrome"
-#    state: present
-#    update_cache: yes
-#
-#- name: "apt | ensure Google chrome present"
-#  apt:
-#    name: "{{ chrome_package }}"
-#    state: present
+- name: Check arch is 64 bits
+  shell: uname -m
+  register: linux_arch
+  ignore_errors: yes
 
-#- name: Remove old cert8.db
-#  file:
-#    state: absent
-#    path: "~/.mozilla/firefox/jn47vyip.default/cert8.db"
-
-#
-#- name: Add certificate for firefox
-#  template: src=cert8.db.j2  dest=~/.mozilla/firefox/jn47vyip.default group=dev owner=dev mode=755
-#  tags: ["configuration","fiferfox"]
+- name: Fix source list file for x64 arch
+  lineinfile: "dest=/etc/apt/sources.list.d/google-chrome.list state=present regexp='^.*http://dl.google.com.*$' line='deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main'"
+  when: linux_arch.rc == 0 and linux_arch.stdout == "x86_64"

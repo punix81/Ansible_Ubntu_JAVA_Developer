@@ -1,23 +1,29 @@
----
-  - name: add snwh/pulp repo
-    command: add-apt-repository ppa:snwh/pulp
-    become: true
+- name: Import Paper GPG signing key
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    state: present
+    id: 89993A70
+  when: ansible_os_family == 'Debian'
+  tags:
+    - paper
 
-  - name: Update apt
-    apt: update_cache=yes
+- name: Add Paper repository
+  apt_repository:
+    repo: "deb http://ppa.launchpad.net/snwh/pulp/ubuntu {{ansible_distribution_release | lower}} main"
+    state: present
+  when: ansible_os_family == 'Debian'
+  tags:
+    - paper
 
-  - name: Install the package "paper-icon-theme"
-    apt:
-      name: paper-icon-theme
-      state: present
-
-  - name: Install the package "paper-cursor-theme"
-    apt:
-      name: paper-cursor-theme
-      state: present
-
-  - name: Install the package "paper-cursor-theme"
-    apt:
-      name: paper-gtk-theme
-      state: present
-
+- name: Install Paper packages
+  apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+  with_items:
+    - paper-icon-theme
+    - paper-cursor-theme
+    - paper-gtk-theme
+  when: ansible_os_family == 'Debian'
+  tags:
+    - paper

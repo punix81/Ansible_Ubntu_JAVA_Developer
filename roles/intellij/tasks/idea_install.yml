@@ -29,7 +29,7 @@
 # show the content of intellij_out var
 - debug: var=intellij_out
 
-- name: Unarchive java tar
+- name: Unarchive intellij tar
   unarchive:
     copy: no
     src: "{{global_vars.home_path}}/ide/idea_{{intellij_version}}.archive"

@@ -24,6 +24,7 @@
     - paper-icon-theme
     - paper-cursor-theme
 #    - paper-gtk-theme
+    - unity-tweak-tool
   when: ansible_os_family == 'Debian'
   tags:
     - paper

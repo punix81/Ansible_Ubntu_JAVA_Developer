@@ -1,0 +1,23 @@
+---
+  - name: Include global_vars
+    include_vars:
+      file: 'defaults/main.yml'
+      name:  global_vars
+
+  - debug:
+    msg: "{{ global_vars.no_proxy }}"
+
+  - name: add snwh/pulp repo
+    command: add-apt-repository ppa:snwh/pulp
+    become: true
+
+  - name: Update apt
+    apt: update_cache=yes
+
+  - name: Install some Stuff
+    become: yes
+    apt: pkg={{ item }} state=latest
+    with_items:
+      - paper-icon-theme
+      - paper-cursor-theme
+      - paper-gtk-theme

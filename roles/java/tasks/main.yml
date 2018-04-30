@@ -18,9 +18,3 @@
 
   - import_tasks: tasks/java_install.yml
     when: not java_present.stat.exists
-
-  - debug:
-      msg: "Proxy is activated? {{ global_vars.enable_proxy }}"
-
-  - import_tasks: tasks/certificates.yml
-    when: global_vars.enable_proxy

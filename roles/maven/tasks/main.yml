@@ -13,7 +13,7 @@
     register: maven_present
 
   - debug:
-      msg: "Java not Installed"
+      msg: "Maven not Installed"
     when:  maven_present.stat.exists
 
   - import_tasks: tasks/maven_install.yml

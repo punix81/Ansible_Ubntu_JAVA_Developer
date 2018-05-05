@@ -26,5 +26,5 @@
   - debug:
       msg: "Java not Installed"
 
-#  - import_tasks: tasks/java_install.yml
-#    when: not java_present.stat.exists
+  - import_tasks: tasks/java_install.yml
+    when: not java_present.stat.exists |  check_java.stat.true

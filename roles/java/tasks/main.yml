@@ -19,9 +19,9 @@
 
   - name: Check Java
     command: java  -version
-      register: check_java
-      ignore_errors: True
-      changed_when: False
+    register: check_java
+    ignore_errors: True
+    changed_when: False
 
   - debug:
       msg: "Java not Installed"

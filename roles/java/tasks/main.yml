@@ -18,14 +18,13 @@
 
 
   - name: Check Java
-    shell: command -v java
+      command: jva  -version
       register: check_java
       ignore_errors: True
       changed_when: False
 
   - debug:
       msg: "Java not Installed"
-    when:  java_present.stat.exists
 
-  - import_tasks: tasks/java_install.yml
-    when: not java_present.stat.exists
+#  - import_tasks: tasks/java_install.yml
+#    when: not java_present.stat.exists

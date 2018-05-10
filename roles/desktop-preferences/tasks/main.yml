@@ -4,9 +4,35 @@
     file: 'defaults/main.yml'
     name:  global_vars
 
+
+
+- name: Enable
+  blockinfile:
+      dest: /etc/gdm3/custom.conf
+      insertafter: '#  AutomaticLogin = user1'
+      block: |
+         AutomaticLoginEnable=True
+         AutomaticLogin=dev
+
+
+
+
 - name: Set global keybindings
   command: "{{ item }}"
   with_items:
+    - gsettings set org.gnome.desktop.screensaver lock-enabled false
+    - gsettings set org.gnome.system.proxy use-same-proxy false
+    - gsettings set org.gnome.system.proxy mode 'manual'
+    - gsettings set org.gnome.system.proxy autoconfig-url 'http://proxypac.efd.admin.ch/proxy.pac'
+    - gsettings set org.gnome.system.proxy.http host '{{global_vars.proxy}}'
+    - gsettings set org.gnome.system.proxy.http port 8080
+    - gsettings set org.gnome.system.proxy.http enabled false
+    - gsettings set org.gnome.system.proxy.https host '{{global_vars.proxy}}'
+    - gsettings set org.gnome.system.proxy.https port 8080
+    - gsettings set org.gnome.system.proxy ignore-hosts "['localhost', '127.0.0.0/8', '::1', '.admin.ch']"
+    - gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'firefox.desktop', 'org.gnome.Nautilus.desktop', 'gnome-control-center.desktop', 'org.gnome.Terminal.desktop', 'atom.desktop', 'intellij.desktop', 'sqldeveloper.desktop','soapui.desktop', 'kitematic.desktop']"
+    - gsettings set org.gnome.desktop.screensaver lock-enabled false
+
     - gsettings set org.gnome.desktop.wm.keybindings cycle-group "[]"
     - gsettings set org.gnome.desktop.wm.keybindings begin-move "[]"
     - gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "[]"

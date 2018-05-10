@@ -4,9 +4,6 @@
     name: docker.io
     state: latest
 
-#- name: groupadd docker
-#  command: groupadd docker
-
 - name: Usermod
   command: usermod -aG docker dev
   register: command_result
@@ -16,23 +13,13 @@
   fail: msg="the command failed"
   when: "'FAILED' in command_result.stderr"
 
-
 - name: Create docker service folder
-  file: state=directory path={{docker_service_folder}} owner='{{ global_vars.user_session }}' group='{{ global_vars.user_session }}' recurse=yes
-
-
-
-#- name: Ensure docker is configured
-#  template: src=http-proxy.conf.j2 dest={{docker_service_folder}}http-proxy.conf
-#  tags: ["configuration","docker"]
-
-
+  file: state=directory path={{docker_service_folder}} owner=dev group=dev recurse=yes
 
 - name: Install Compose on Ubuntu systems
   shell: "curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose"
   args:
   warn: no
-
 
 - name: Apply executable permissions to the binary
   command: "{{ item }}"

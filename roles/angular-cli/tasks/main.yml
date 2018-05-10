@@ -5,18 +5,14 @@
     name: nodejs
   when: not idontwanttorun
 
-- name: Instal Angular-cli (warning  ! If it lasts more than 2 minutes! Stop the process and restart the desktop_install script  )
+- name: Install Angular-cli ( *** warning  ! If it lasts more than 2 minutes! Stop the process and restart the desktop_install script ***  )
   npm:
     name: '@angular/cli'
     global: yes
-  tags:
-    - angular/cli
 
 - name: Instal ncu
   npm:
     name: npm-check-updates
     global: yes
-  tags:
-    - ncu
 
 

@@ -1,27 +1,21 @@
-# Ansible Ubuntu 17.10 and 18(beta)
-Ansible roles to setup Ubuntu desktop 17.10 an 18 (Beta). This playbook is focused on quickly deploying a "ready to use" JAVA dev machine.
+# Ansible Ubuntu 17.10 and 18.04
+Ansible roles to setup Ubuntu desktop 17.10 an 18.04. This playbook is focused on quickly deploying a "ready to use" JAVA developers machine.
 
 
-## Requirements
-- Git
-- Ansible 2+ (automatically installed from [Ansible offical Documentation ](http://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html?#latest-releases-via-apt-ubuntu))
+### How to use this Installation
 
-
-## Installation
-First, you need to install Git and Ansible :
-
-### ansible Installation
+Juste to executed the ansible_install.sh  
 ```
-$ sudo apt-get update
-$ sudo apt-get install software-properties-common
-$ sudo apt-add-repository ppa:ansible/ansible
-$ sudo apt-get update
-$ sudo apt-get install ansible
+./ansible_install.sh
 ```
-### Configure Ansible
-Edit /etc/ansible/ansible.cfg file
+This script will install 'GIT' and 'Ansible'. During the execution you just have to enter your name and mail for gitconfig.
+Ansible will automatically install by default with the following plugins
+    gsetting.py 
+    
+  [gsetting.py](https://github.com/jistr/ansible-gsetting) Ansible module for setting GSettings entries.
 
-### Git Installation
+
+### How to customize properties
 ```
 $ sudo apt-get update
 $ sudo apt-get install git-core

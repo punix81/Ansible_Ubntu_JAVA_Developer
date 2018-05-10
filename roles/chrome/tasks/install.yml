@@ -10,7 +10,7 @@
 
 - name: Download latest .deb
   get_url:
-    url:   repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+    url: '{{chrome_mirror}}/{{chrome_deb}}'
     dest: /tmp/{{chrome_deb}}
     owner: root
     group: root

@@ -8,23 +8,18 @@
       msg: "Home path {{ global_vars.home_path }}"
 
   - name: Check if java is installed
-    stat:
-      path={{global_vars.home_path}}/java
+    command: "{{ item }}"
+    with_items:
+      - java --version
     register: java_present
-
-  - debug:
-      msg: "Java not Installed"
-    when:  java_present.stat.exists
-
-
-  - name: Check Java
-    command: java  -version
-    register: check_java
     ignore_errors: True
-    changed_when: False
+
+  - debug:
+      var: java_present
 
   - debug:
       msg: "Java not Installed"
+    when:  java_present.failed
 
   - import_tasks: tasks/java_install.yml
-    when: not java_present.stat.exists |  check_java.stat.true
+    when: java_present.failed

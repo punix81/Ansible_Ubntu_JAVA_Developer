@@ -59,45 +59,45 @@
 
 
 
-  - name: Prepare configure proxys for gitconfig (Advence Config)
-    copy:
-      content: '[http "http://{{ global_vars.git_url }}/"]
-
-                    proxy = ""
-
-
-                [url "https://"]
-
-                    insteadOf = git://
-
-
-                [http]
-
-                    proxy = http://{{global_vars.proxy}}:{{global_vars.port}}
-
-                    sslVerify=false
-
-
-                [https]
-
-                    proxy = http://{{global_vars.proxy}}:{{global_vars.port}}
-
-
-                [user]
-
-                    name = {{ global_vars.user_display_name }}
-
-                    email = {{ global_vars.user_mail }}
-
-                [http "https://{{ global_vars.git_url }}/"]
-
-                    proxy ='
-      dest: '{{ global_vars.user_home}}.gitconfig'
-      force: no
-      group: '{{ global_vars.user_session }}'
-      owner: '{{ global_vars.user_session }}'
-      mode: 0755
-    when: global_vars.enable_proxy
+#  - name: Prepare configure proxys for gitconfig (Advence Config)
+#    copy:
+#      content: '[http "http://{{ global_vars.git_url }}/"]
+#
+#                    proxy = ""
+#
+#
+#                [url "https://"]
+#
+#                    insteadOf = git://
+#
+#
+#                [http]
+#
+#                    proxy = http://{{global_vars.proxy}}:{{global_vars.port}}
+#
+#                    sslVerify=false
+#
+#
+#                [https]
+#
+#                    proxy = http://{{global_vars.proxy}}:{{global_vars.port}}
+#
+#
+#                [user]
+#
+#                    name = {{ global_vars.user_display_name }}
+#
+#                    email = {{ global_vars.user_mail }}
+#
+#                [http "https://{{ global_vars.git_url }}/"]
+#
+#                    proxy ='
+#      dest: '{{ global_vars.user_home}}.gitconfig'
+#      force: no
+#      group: '{{ global_vars.user_session }}'
+#      owner: '{{ global_vars.user_session }}'
+#      mode: 0755
+#    when: global_vars.enable_proxy
 
   - stat:
       path: "{{ global_vars.home_path }}"
@@ -174,3 +174,8 @@
 
   # show the content of aptout var
   - debug: var=aptout
+
+  - name: Inslatll jmespath for json
+    apt: pkg={{ item }} state=latest
+    with_items:
+      - python-jmespath

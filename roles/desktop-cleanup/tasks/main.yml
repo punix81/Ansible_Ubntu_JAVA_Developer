@@ -1,8 +1,4 @@
 ---
-- name: Include global_vars
-  include_vars:
-    file: 'defaults/main.yml'
-    name:  global_vars
 
 - name: Ensure Unity MediaScanner is removed (useless + cause high CPU peaks)
   apt: pkg={{ item }} purge=yes state=absent
@@ -22,7 +18,7 @@
 
 
 - name: Remove exemples shortcut
-  file: path="{{ global_vars.user_home }}/examples.desktop" force=yes state=absent
+  file: path="{{ home_dev }}/examples.desktop" force=yes state=absent
 
 # Reassign path :
 # xdg-user-dirs-update --set NAME ABSOLUTE_PATH
@@ -37,7 +33,7 @@
 #   PICTURES
 #   VIDEOS
 - name: Remove XDG directories
-  file: path="{{ global_vars.user_home }}/{{ item }}" force=yes state=absent
+  file: path="{{ home_dev }}/{{ item }}" force=yes state=absent
   with_items:
     - Documents
     - Pictures

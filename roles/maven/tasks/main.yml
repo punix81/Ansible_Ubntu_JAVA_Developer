@@ -5,17 +5,25 @@
       name:  global_vars
 
   - debug:
-      msg: "Home path {{ global_vars.home_path }}/maven"
+      msg: "Home path {{ global_vars.home_path }}"
 
   - name: Check if maven is installed
-    stat:
-      path={{ global_vars.home_path }}/maven
-    register: maven_present
-
+    command: "{{ item }}"
+    with_items:
+      - mvn -version
+    register: maven_result
+    ignore_errors: True
 
   - debug:
-      msg: "Maven not Installed"
-    when:   maven_present.stat.exists
+      var: maven_result
+
+  - name: "Find if failed  maven command"
+    debug:
+      var: maven_result|json_query('results[*].[failed] | [0]')
+
+  - name: "test maven_present"
+    debug:
+      var: maven_result.results[0].failed
 
   - import_tasks: tasks/maven_install.yml
-    when: not  maven_present.stat.exists
+    when: maven_result.results[0].failed

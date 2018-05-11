@@ -23,7 +23,6 @@ $ sudo apt-get install git-core
 
 Then you need to customize the playbook /Ansible_Ubuntu_17/vars/`all.yml` (or create a new one) to suit your needs. Every roles are disabled by default.
 
-Run `ansible-playbook ansible-desktop.yml --ask-become-pass` and enter your sudo password to run the playbook
 
 ## Roles included
 
@@ -48,4 +47,5 @@ Run `ansible-playbook ansible-desktop.yml --ask-become-pass` and enter your sudo
 | sqlDeveloper             |  [Oracle SQL Developer](http://www.oracle.com/technetwork/developer-tools/sql-developer/overview/index.html) is an Integrated development environment (IDE) for working with SQL in Oracle databases.   |
 | tomcat                   |   [Apache Tomcat](http://tomcat.apache.org/), often referred to as Tomcat Server, is an open-source Java Servlet Container developed by the Apache Software Foundation (ASF).                                                             |
 | webpack                  |   [Webpack](https://webpack.js.org/) is an open-source JavaScript module bundler.                                                              |
+| Redis                  |   [redis](https://redis.io/) Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker..                                                              |
 
